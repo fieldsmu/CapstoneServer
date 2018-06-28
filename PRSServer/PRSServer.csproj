@@ -46,6 +46,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -184,11 +190,48 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\PurchaseRequestLineitemsController.cs" />
+    <Compile Include="Controllers\PurchaseRequestsController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806281431284_initial migration with users controller.cs" />
+    <Compile Include="Migrations\201806281431284_initial migration with users controller.Designer.cs">
+      <DependentUpon>201806281431284_initial migration with users controller.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806281447589_added vendors controller.cs" />
+    <Compile Include="Migrations\201806281447589_added vendors controller.Designer.cs">
+      <DependentUpon>201806281447589_added vendors controller.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806281505533_added PurchaseRequestsController.cs" />
+    <Compile Include="Migrations\201806281505533_added PurchaseRequestsController.Designer.cs">
+      <DependentUpon>201806281505533_added PurchaseRequestsController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806281516062_added ProductsController.cs" />
+    <Compile Include="Migrations\201806281516062_added ProductsController.Designer.cs">
+      <DependentUpon>201806281516062_added ProductsController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806281524295_added PurchaseRequestLineitemsController.cs" />
+    <Compile Include="Migrations\201806281524295_added PurchaseRequestLineitemsController.Designer.cs">
+      <DependentUpon>201806281524295_added PurchaseRequestLineitemsController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806281545182_lineitem list to prcontroller and changed doubles to decimals.cs" />
+    <Compile Include="Migrations\201806281545182_lineitem list to prcontroller and changed doubles to decimals.Designer.cs">
+      <DependentUpon>201806281545182_lineitem list to prcontroller and changed doubles to decimals.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\PRSServerDbContext.cs" />
+    <Compile Include="Models\PurchaseRequest.cs" />
+    <Compile Include="Models\PurchaseRequestLineitem.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Vendor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\JsonResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -246,7 +289,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -276,6 +318,26 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201806281431284_initial migration with users controller.resx">
+      <DependentUpon>201806281431284_initial migration with users controller.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806281447589_added vendors controller.resx">
+      <DependentUpon>201806281447589_added vendors controller.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806281505533_added PurchaseRequestsController.resx">
+      <DependentUpon>201806281505533_added PurchaseRequestsController.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806281516062_added ProductsController.resx">
+      <DependentUpon>201806281516062_added ProductsController.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806281524295_added PurchaseRequestLineitemsController.resx">
+      <DependentUpon>201806281524295_added PurchaseRequestLineitemsController.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806281545182_lineitem list to prcontroller and changed doubles to decimals.resx">
+      <DependentUpon>201806281545182_lineitem list to prcontroller and changed doubles to decimals.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
