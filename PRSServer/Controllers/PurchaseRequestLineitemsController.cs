@@ -6,12 +6,25 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
-namespace PRSServer.Controllers
-{
-    public class PurchaseRequestLineitemsController : ApiController {
+namespace PRSServer.Controllers {
+
+	[EnableCors(origins: "*", headers: "*", methods: "*")]
+
+	public class PurchaseRequestLineitemsController : ApiController {
 
 		private PRSServerDbContext db = new PRSServerDbContext();
+
+
+		//calculate purchase requests total
+		private void RecalcLineItemTotal(int purchaseRequestId) {
+			var pr = db.PurchaseRequests.Find(purchaseRequestId);
+			if (pr == null) return;
+			var lines = db.PurchaseRequestLineitems.Where(li => li.PurchaseRequestId == purchaseRequestId);
+			pr.Total = lines.Sum(li => li.Quantity * li.Product.Price);
+			db.SaveChanges();
+		}
 
 		//GET-ALL
 		//indicates that a get method will be used to get this info vs. post which updates
@@ -33,6 +46,7 @@ namespace PRSServer.Controllers
 					Message = "Id does not exist"
 				};
 			}
+			
 			return new JsonResponse {
 				Data = db.PurchaseRequestLineitems.Find(id)
 			};
@@ -58,6 +72,7 @@ namespace PRSServer.Controllers
 
 			db.PurchaseRequestLineitems.Add(purchaserequestlineitem);
 			db.SaveChanges();
+			RecalcLineItemTotal(purchaserequestlineitem.Id);
 			return new JsonResponse {
 				Message = "Create successful.",
 				Data = purchaserequestlineitem
@@ -83,6 +98,7 @@ namespace PRSServer.Controllers
 			}
 			db.Entry(purchaserequestlineitem).State = System.Data.Entity.EntityState.Modified;
 			db.SaveChanges();
+			RecalcLineItemTotal((purchaserequestlineitem.Id));
 			return new JsonResponse {
 				Message = "Change successful.",
 				Data = purchaserequestlineitem

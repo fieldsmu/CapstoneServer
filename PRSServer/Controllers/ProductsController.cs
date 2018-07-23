@@ -6,10 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace PRSServer.Controllers
 {
-    public class ProductsController : ApiController {
+	[EnableCors(origins: "*", headers: "*", methods: "*")]
+
+	public class ProductsController : ApiController {
 
 		private PRSServerDbContext db = new PRSServerDbContext();
 
@@ -74,6 +77,22 @@ namespace PRSServer.Controllers
 					Message = "Create requires an instance of Major"
 				};
 			}
+
+			var newProduct = db.Products.Find(product.Id);
+			if (newProduct == null) {
+				return new JsonResponse {
+					Result = "Failed",
+					Message = "Cannot find product in the database"
+				};
+			}
+				newProduct.PartNumber = product.PartNumber;
+				newProduct.Name = product.Name;
+				newProduct.Price = product.Price;
+				newProduct.Unit = product.Unit;
+				newProduct.PhotoPath = product.PhotoPath;
+				newProduct.Active = product.Active;
+				newProduct.VendorId = product.VendorId;
+
 			if (!ModelState.IsValid) {
 				return new JsonResponse {
 					Result = "Failed",
@@ -81,11 +100,10 @@ namespace PRSServer.Controllers
 					Error = ModelState
 				};
 			}
-			db.Entry(product).State = System.Data.Entity.EntityState.Modified;
 			db.SaveChanges();
 			return new JsonResponse {
 				Message = "Change successful.",
-				Data = product
+				Data = newProduct
 			};
 		}
 

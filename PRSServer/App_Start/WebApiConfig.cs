@@ -8,9 +8,17 @@ namespace PRSServer {
 	public static class WebApiConfig {
 		public static void Register(HttpConfiguration config) {
 			// Web API configuration and services
-	
+
+			config.EnableCors();
+
 			// Web API routes
 			config.MapHttpAttributeRoutes();
+
+			config.Routes.MapHttpRoute(
+				name: "Authentication",
+				routeTemplate: "{controller}/{action}/{username}/{password}",
+				defaults: new { }
+				);
 
 			config.Routes.MapHttpRoute(
 				name: "RegularApi",

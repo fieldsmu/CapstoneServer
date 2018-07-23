@@ -6,12 +6,25 @@ using System.Net.Http;
 using System.Web.Http;
 using PRSServer.Models;
 using PRSServer.Utility;
+using System.Web.Http.Cors;
 
-namespace PRSServer.Controllers
-{
+namespace PRSServer.Controllers {
+
+	[EnableCors(origins: "*", headers: "*", methods: "*")]
+
     public class UsersController : ApiController {
 
 		private PRSServerDbContext db = new PRSServerDbContext();
+
+		//[HttpGet]
+		public JsonResponse Authenticate(string username, string password) {
+			if (username == null || password == null)
+				return new JsonResponse { Code = -2, Message = "Authentication failed" };
+			var user = db.Users.SingleOrDefault(u => u.Username == username && u.Password == password);
+			if (user == null)
+				return new JsonResponse { Code = -2, Message = "Authentication failed" };
+			return new JsonResponse { Data = user };
+		}
 
 		//GET-ALL
 		//indicates that a get method will be used to get this info vs. post which updates
@@ -45,13 +58,13 @@ namespace PRSServer.Controllers
 			if (user == null) {
 				return new JsonResponse {
 					Result = "Failed",
-					Message = "Create requires an instance of Major"
+					Message = "Create requires an instance of User"
 				};
 			}
 			if (!ModelState.IsValid) {
 				return new JsonResponse {
 					Result = "Failed",
-					Message = "Model state is invalid. See data.",
+					Message = "Model state is invalid. See Error.",
 					Error = ModelState
 				};
 			}
@@ -71,13 +84,13 @@ namespace PRSServer.Controllers
 			if (user == null) {
 				return new JsonResponse {
 					Result = "Failed",
-					Message = "Create requires an instance of Major"
+					Message = "Change requires an instance of User"
 				};
 			}
 			if (!ModelState.IsValid) {
 				return new JsonResponse {
 					Result = "Failed",
-					Message = "Model state is invalid. See data.",
+					Message = "Model state is invalid. See Error.",
 					Error = ModelState
 				};
 			}
@@ -96,13 +109,13 @@ namespace PRSServer.Controllers
 			if (user == null) {
 				return new JsonResponse {
 					Result = "Failed",
-					Message = "Create requires an instance of Major"
+					Message = "Remove requires an instance of Major"
 				};
 			}
 			if (!ModelState.IsValid) {
 				return new JsonResponse {
 					Result = "Failed",
-					Message = "Model state is invalid. See data.",
+					Message = "Model state is invalid. See Error.",
 					Error = ModelState
 				};
 			}

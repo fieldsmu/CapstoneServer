@@ -6,10 +6,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
-namespace PRSServer.Controllers
-{
-    public class VendorsController : ApiController {
+namespace PRSServer.Controllers {
+
+	[EnableCors(origins: "*", headers: "*", methods: "*")]
+
+	public class VendorsController : ApiController {
+
 
 		private PRSServerDbContext db = new PRSServerDbContext();
 

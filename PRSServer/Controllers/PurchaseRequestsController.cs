@@ -6,10 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
-namespace PRSServer.Controllers
-{
-    public class PurchaseRequestsController : ApiController {
+namespace PRSServer.Controllers {
+
+	[EnableCors(origins: "*", headers: "*", methods: "*")]
+
+	public class PurchaseRequestsController : ApiController {
 
 		private PRSServerDbContext db = new PRSServerDbContext();
 
@@ -20,7 +23,7 @@ namespace PRSServer.Controllers
 		public JsonResponse List() {
 			return new JsonResponse {
 				Data = db.PurchaseRequests.ToList()
-			};
+		};
 		}
 
 		//GET-ONE
@@ -68,6 +71,7 @@ namespace PRSServer.Controllers
 		[HttpPost]
 		[ActionName("Change")]
 		public JsonResponse Change(PurchaseRequest purchaserequest) {
+			purchaserequest.User = null;
 			if (purchaserequest == null) {
 				return new JsonResponse {
 					Result = "Failed",
