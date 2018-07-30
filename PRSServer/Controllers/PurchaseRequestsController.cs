@@ -72,6 +72,7 @@ namespace PRSServer.Controllers {
 		[ActionName("Change")]
 		public JsonResponse Change(PurchaseRequest purchaserequest) {
 			purchaserequest.User = null;
+			purchaserequest.PurchaseRequestLineitems = null;
 			if (purchaserequest == null) {
 				return new JsonResponse {
 					Result = "Failed",

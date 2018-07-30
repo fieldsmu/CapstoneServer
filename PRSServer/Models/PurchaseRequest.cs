@@ -27,7 +27,7 @@ namespace PRSServer {
 
 		[StringLength(15)]
 		[Required]
-		public string Status { get; set; } = "NEW";
+		public string Status { get; set; } = "New";
 
 		[Required]
 		public decimal Total { get; set; } = 0;

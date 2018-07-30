@@ -1,5 +1,6 @@
 ﻿using PRSServer.Models;
 using PRSServer.Utility;
+using PRSServer.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +47,7 @@ namespace PRSServer.Controllers {
 					Message = "Id does not exist"
 				};
 			}
-			
+
 			return new JsonResponse {
 				Data = db.PurchaseRequestLineitems.Find(id)
 			};
@@ -72,7 +73,7 @@ namespace PRSServer.Controllers {
 
 			db.PurchaseRequestLineitems.Add(purchaserequestlineitem);
 			db.SaveChanges();
-			RecalcLineItemTotal(purchaserequestlineitem.Id);
+			RecalcLineItemTotal(purchaserequestlineitem.PurchaseRequestId);
 			return new JsonResponse {
 				Message = "Create successful.",
 				Data = purchaserequestlineitem
@@ -98,7 +99,7 @@ namespace PRSServer.Controllers {
 			}
 			db.Entry(purchaserequestlineitem).State = System.Data.Entity.EntityState.Modified;
 			db.SaveChanges();
-			RecalcLineItemTotal((purchaserequestlineitem.Id));
+			RecalcLineItemTotal(purchaserequestlineitem.PurchaseRequestId);
 			return new JsonResponse {
 				Message = "Change successful.",
 				Data = purchaserequestlineitem
@@ -124,6 +125,7 @@ namespace PRSServer.Controllers {
 			}
 			db.Entry(purchaserequestlineitem).State = System.Data.Entity.EntityState.Deleted;
 			db.SaveChanges();
+			RecalcLineItemTotal(purchaserequestlineitem.PurchaseRequestId);
 			return new JsonResponse {
 				Message = "Remove successful.",
 				Data = purchaserequestlineitem
@@ -150,6 +152,45 @@ namespace PRSServer.Controllers {
 			return new JsonResponse {
 				Message = "Remove successful.",
 				Data = purchaserequestlineitem
+			};
+		}
+
+		//REMOVE/ID
+		[HttpGet]
+		[ActionName("PurchaseOrder")]
+		public JsonResponse PurchaseOrder(int? id) {
+			if (id == null)
+				return new JsonResponse {
+					Result = "Failed",
+					Message = "Purchase order requires a Vendor Id"
+				};
+			List<PurchaseRequestLineitem> allprlis = new List<PurchaseRequestLineitem>();
+			allprlis=db.PurchaseRequestLineitems.ToList();
+			List<PurchaseRequestLineitem> filteredpurchaserequestlineitems = new List<PurchaseRequestLineitem>();
+			foreach (PurchaseRequestLineitem apr in allprlis) {
+				if (apr.Product.VendorId == id && apr.PurchaseRequest.Status == "Approved") {
+					filteredpurchaserequestlineitems.Add(apr);
+				}
+			}
+
+			Dictionary<int, PurchaseOrder> quantityCounter = new Dictionary<int, PurchaseOrder>();
+			foreach (PurchaseRequestLineitem fprli in filteredpurchaserequestlineitems) {
+				if(quantityCounter.ContainsKey(fprli.ProductId)) {
+					quantityCounter[fprli.ProductId].Quantity += fprli.Quantity;
+				} else {
+					PurchaseOrder newPO = new PurchaseOrder();
+					newPO.Name = fprli.Product.Name;
+					newPO.PId = fprli.ProductId;
+					newPO.Quantity = fprli.Quantity;
+					newPO.Price = fprli.Product.Price;
+					newPO.Product = fprli.Product;
+					quantityCounter.Add(fprli.ProductId, newPO);
+				}
+			}
+
+			return new JsonResponse {
+				Message = "Get purchase order successful",
+				Data = quantityCounter.Values
 			};
 		}
 	}

@@ -17,7 +17,7 @@ namespace PRSServer {
 			config.Routes.MapHttpRoute(
 				name: "Authentication",
 				routeTemplate: "{controller}/{action}/{username}/{password}",
-				defaults: new { }
+				defaults: new { id = RouteParameter.Optional }
 				);
 
 			config.Routes.MapHttpRoute(

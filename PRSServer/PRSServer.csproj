@@ -238,6 +238,7 @@
     <Compile Include="Models\Vendor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\JsonResponse.cs" />
+    <Compile Include="ViewModels\PurchaseOrder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

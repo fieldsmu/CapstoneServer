@@ -16,7 +16,8 @@ namespace PRSServer.Controllers {
 
 		private PRSServerDbContext db = new PRSServerDbContext();
 
-		//[HttpGet]
+		[HttpGet]
+		[ActionName("Authenticate")]
 		public JsonResponse Authenticate(string username, string password) {
 			if (username == null || password == null)
 				return new JsonResponse { Code = -2, Message = "Authentication failed" };
