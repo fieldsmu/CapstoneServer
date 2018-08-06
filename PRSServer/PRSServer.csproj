@@ -205,29 +205,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201806281431284_initial migration with users controller.cs" />
-    <Compile Include="Migrations\201806281431284_initial migration with users controller.Designer.cs">
-      <DependentUpon>201806281431284_initial migration with users controller.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806281447589_added vendors controller.cs" />
-    <Compile Include="Migrations\201806281447589_added vendors controller.Designer.cs">
-      <DependentUpon>201806281447589_added vendors controller.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806281505533_added PurchaseRequestsController.cs" />
-    <Compile Include="Migrations\201806281505533_added PurchaseRequestsController.Designer.cs">
-      <DependentUpon>201806281505533_added PurchaseRequestsController.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806281516062_added ProductsController.cs" />
-    <Compile Include="Migrations\201806281516062_added ProductsController.Designer.cs">
-      <DependentUpon>201806281516062_added ProductsController.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806281524295_added PurchaseRequestLineitemsController.cs" />
-    <Compile Include="Migrations\201806281524295_added PurchaseRequestLineitemsController.Designer.cs">
-      <DependentUpon>201806281524295_added PurchaseRequestLineitemsController.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806281545182_lineitem list to prcontroller and changed doubles to decimals.cs" />
-    <Compile Include="Migrations\201806281545182_lineitem list to prcontroller and changed doubles to decimals.Designer.cs">
-      <DependentUpon>201806281545182_lineitem list to prcontroller and changed doubles to decimals.cs</DependentUpon>
+    <Compile Include="Migrations\201808051211581_init.cs" />
+    <Compile Include="Migrations\201808051211581_init.Designer.cs">
+      <DependentUpon>201808051211581_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Product.cs" />
@@ -329,23 +309,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201806281431284_initial migration with users controller.resx">
-      <DependentUpon>201806281431284_initial migration with users controller.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806281447589_added vendors controller.resx">
-      <DependentUpon>201806281447589_added vendors controller.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806281505533_added PurchaseRequestsController.resx">
-      <DependentUpon>201806281505533_added PurchaseRequestsController.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806281516062_added ProductsController.resx">
-      <DependentUpon>201806281516062_added ProductsController.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806281524295_added PurchaseRequestLineitemsController.resx">
-      <DependentUpon>201806281524295_added PurchaseRequestLineitemsController.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806281545182_lineitem list to prcontroller and changed doubles to decimals.resx">
-      <DependentUpon>201806281545182_lineitem list to prcontroller and changed doubles to decimals.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201808051211581_init.resx">
+      <DependentUpon>201808051211581_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
